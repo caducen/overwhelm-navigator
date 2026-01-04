@@ -24,7 +24,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending waitlist confirmation to: ${email}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Overloaded <onboarding@resend.dev>",
+      from: "Overloaded <hello@osccad.com>",
       to: [email],
       subject: "You're on the Overloaded waitlist! 🎉",
       html: `
