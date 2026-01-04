@@ -3,8 +3,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Check, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { z } from "zod";
 
-const EmailCapture = () => {
+const emailSchema = z.string().trim().email().max(255);
+
+interface EmailCaptureProps {
+  source?: string;
+}
+
+const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const { toast } = useToast();
@@ -12,7 +20,8 @@ const EmailCapture = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email || !email.includes("@")) {
+    const result = emailSchema.safeParse(email);
+    if (!result.success) {
       toast({
         title: "Please enter a valid email",
         variant: "destructive",
@@ -22,9 +31,28 @@ const EmailCapture = () => {
 
     setStatus("loading");
     
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+    const { error } = await supabase
+      .from("waitlist_signups")
+      .insert({ email: result.data, source });
+
+    if (error) {
+      setStatus("idle");
+      if (error.code === "23505") {
+        toast({
+          title: "You're already on the list!",
+          description: "We'll notify you when early access opens.",
+        });
+        setStatus("success");
+        return;
+      }
+      toast({
+        title: "Something went wrong",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setStatus("success");
     toast({
       title: "You're on the list!",
