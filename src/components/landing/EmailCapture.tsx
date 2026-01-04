@@ -53,6 +53,11 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
       return;
     }
 
+    // Send confirmation email (fire and forget - don't block the UI)
+    supabase.functions.invoke("send-waitlist-confirmation", {
+      body: { email: result.data },
+    }).catch((err) => console.error("Failed to send confirmation email:", err));
+
     setStatus("success");
     toast({
       title: "You're on the list!",
