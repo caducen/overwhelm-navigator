@@ -1,23 +1,63 @@
 import { motion } from "framer-motion";
-import { Quote } from "lucide-react";
+import { useCountUp } from "@/hooks/use-count-up";
 
-const testimonials = [
+const statistics = [
   {
-    quote: "I finally have a system that works with my brain, not against it.",
-    author: "Early Beta Tester",
-    role: "Product Manager",
+    number: 77,
+    suffix: "%",
+    description: "of knowledge workers report moderate to high digital burnout",
+    source: "— Deloitte Digital Wellness Survey, 2024",
   },
   {
-    quote: "It's like having a copilot who actually understands cognitive load.",
-    author: "Early Beta Tester",
-    role: "Engineering Lead",
+    number: 40,
+    suffix: "%",
+    description: "of productive time lost to context-switching and tool fragmentation",
+    source: "— Cal Newport, Deep Work Research",
   },
   {
-    quote: "First time in years I've ended a workday feeling clear, not scattered.",
-    author: "Early Beta Tester",
-    role: "Startup Founder",
+    number: 1.5,
+    prefix: "$",
+    suffix: "B",
+    description: "projected market for cognitive wellness tools by 2028",
+    source: "— Market Research Future",
   },
 ];
+
+const StatCard = ({ stat, index }: { stat: typeof statistics[0]; index: number }) => {
+  const { count, elementRef } = useCountUp(stat.number, {
+    duration: 2000,
+    startOnView: true,
+    decimals: stat.number % 1 !== 0 ? 1 : 0,
+  });
+
+  return (
+    <motion.div
+      ref={elementRef}
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: index * 0.1 }}
+      whileHover={{ 
+        scale: 1.02,
+        y: -4,
+        transition: { duration: 0.2 }
+      }}
+      className="relative p-6 rounded-xl bg-background border border-border shadow-card text-center transition-all duration-300 hover:shadow-elevated"
+    >
+      <div className="text-5xl sm:text-6xl font-bold text-primary mb-4">
+        {stat.prefix && <span>{stat.prefix}</span>}
+        {count}
+        {stat.suffix && <span>{stat.suffix}</span>}
+      </div>
+      <p className="text-foreground mb-4 leading-relaxed">
+        {stat.description}
+      </p>
+      <p className="text-xs text-muted-foreground">
+        {stat.source}
+      </p>
+    </motion.div>
+  );
+};
 
 const SocialProof = () => {
   return (
@@ -31,39 +71,16 @@ const SocialProof = () => {
           className="text-center mb-12"
         >
           <p className="text-sm font-medium text-primary uppercase tracking-wider mb-2">
-            From Early Testers
+            THE RESEARCH IS CLEAR
           </p>
           <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
-            What the founding crew is saying
+            Why knowledge workers are struggling
           </h2>
         </motion.div>
         
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {testimonials.map((testimonial, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="relative p-6 rounded-xl bg-background border border-border shadow-card"
-            >
-              <Quote className="w-8 h-8 text-primary/20 mb-4" />
-              <p className="text-foreground mb-4 leading-relaxed">
-                "{testimonial.quote}"
-              </p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center">
-                  <span className="text-sm font-medium text-secondary-foreground">
-                    {testimonial.author[0]}
-                  </span>
-                </div>
-                <div>
-                  <p className="text-sm font-medium text-foreground">{testimonial.author}</p>
-                  <p className="text-xs text-muted-foreground">{testimonial.role}</p>
-                </div>
-              </div>
-            </motion.div>
+          {statistics.map((stat, index) => (
+            <StatCard key={index} stat={stat} index={index} />
           ))}
         </div>
       </div>

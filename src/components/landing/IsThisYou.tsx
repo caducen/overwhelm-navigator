@@ -68,7 +68,12 @@ const IsThisYou = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: index * 0.08 }}
-              className="group p-6 rounded-xl bg-card border border-border hover:border-primary/30 hover:shadow-card transition-all duration-300"
+              whileHover={{ 
+                scale: 1.02,
+                y: -4,
+                transition: { duration: 0.2 }
+              }}
+              className="group p-6 rounded-xl bg-card border border-border shadow-card transition-all duration-300 hover:border-primary/30 hover:shadow-elevated"
             >
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                 <symptom.icon className="w-6 h-6 text-primary" />

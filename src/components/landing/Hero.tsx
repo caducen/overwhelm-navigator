@@ -32,9 +32,7 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground leading-tight mb-6 text-balance"
           >
-            Finally finish what matters.
-            <br />
-            <span className="text-primary">With AI that brings clarity.</span>
+            Reclaim 40% of your workday.
           </motion.h1>
           
           {/* Subheadline */}
@@ -42,11 +40,19 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 text-balance"
+            className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-6 text-balance"
           >
-            Your work tools were designed for interruptions, not deep focus. 
-            Overwhelm Navigator is a guided system + AI copilot that cuts through the noise 
-            so you can do your best work—without burning out.
+            Guided focus for knowledge workers who can't afford burnout.
+          </motion.p>
+          
+          {/* Body text */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.35 }}
+            className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-10 text-balance"
+          >
+            Your tools were designed for interruptions, not deep focus. Overwhelm Navigator is a guided system + AI copilot that cuts through the noise so you can do your best work—without burning out.
           </motion.p>
           
           {/* CTA Section */}

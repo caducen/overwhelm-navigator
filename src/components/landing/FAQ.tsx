@@ -9,27 +9,27 @@ import {
 const faqs = [
   {
     question: "Is this another productivity app?",
-    answer: "No. Most productivity apps add more to your plate—more features, more notifications, more things to manage. Overwhelm Navigator is a system designed to reduce cognitive load, not increase it. We focus on clarity and completion, not endless task accumulation.",
+    answer: "No. We're not trying to replace your task manager. Overwhelm Navigator is a guided system that sits above your tools—helping you decide what to work on, when, and how. Think of it as a thinking partner that reduces decision fatigue, not another app to manage.",
   },
   {
     question: "Do I need to be technical to use this?",
-    answer: "Not at all. If you can use email and basic apps, you can use Overwhelm Navigator. Our AI copilot guides you through everything with plain language—no prompt engineering required, no technical setup.",
+    answer: "Not at all. If you can send an email, you can use Overwhelm Navigator. The system guides you through structured workflows—you don't need to know how to 'prompt engineer' or configure complex setups.",
   },
   {
     question: "How is this different from a generic AI chatbot?",
-    answer: "AI chatbots are powerful but create new problems: scattered conversations, no structure, and insights that disappear. Overwhelm Navigator provides a complete system—capture, organize, prioritize, and execute—with AI woven throughout. Your AI copilot remembers context and guides you through proven workflows.",
+    answer: "Generic chatbots are unstructured—you're on your own to figure out how to use them effectively. Overwhelm Navigator provides pre-built workflows for common knowledge work challenges: breaking down projects, prioritizing tasks, reflecting on progress. The AI is embedded in a system designed specifically for focus and clarity.",
   },
   {
     question: "I already use Notion/Todoist/Asana. Will this replace them?",
-    answer: "Overwhelm Navigator is designed to be your command center—a layer that brings clarity to your existing tools. For many users, it may simplify their stack. We'll help you integrate what works and let go of what doesn't.",
+    answer: "No, and that's the point. Overwhelm Navigator doesn't try to be another tool you have to migrate to. Instead, it helps you make better decisions about what belongs in those tools and what doesn't. Think of it as a layer of clarity on top of your existing stack.",
   },
   {
     question: "What if I'm already burned out?",
-    answer: "That's exactly who this is for. We've designed Overwhelm Navigator with recovery in mind. The system helps you identify what's truly essential, create sustainable rhythms, and rebuild your sense of competence one small win at a time.",
+    answer: "That's exactly who we built this for. Overwhelm Navigator is designed to meet you where you are—whether you're drowning in work or just trying to maintain sustainable productivity. The system adapts to your energy levels and helps you make progress without pushing yourself further into burnout.",
   },
   {
     question: "When will it be available?",
-    answer: "We're launching with a small founding cohort in the coming weeks. Early access members will help shape the product and lock in founding member pricing. Join the waitlist to be first in line.",
+    answer: "We're launching with a small founding crew (limited to 50 members) soon. Early access members will be the first to experience the system and will have direct input on how we evolve it.",
   },
 ];
 
@@ -61,11 +61,17 @@ const FAQ = () => {
         >
           <Accordion type="single" collapsible className="space-y-4">
             {faqs.map((faq, index) => (
-              <AccordionItem
+              <motion.div
                 key={index}
-                value={`item-${index}`}
-                className="bg-background border border-border rounded-xl px-6 shadow-sm"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: 0.2 + index * 0.05 }}
               >
+                <AccordionItem
+                  value={`item-${index}`}
+                  className="bg-background border border-border rounded-xl px-6 shadow-sm transition-all duration-300 hover:shadow-card hover:border-primary/20"
+                >
                 <AccordionTrigger className="text-left text-foreground font-medium hover:no-underline py-5">
                   {faq.question}
                 </AccordionTrigger>
@@ -73,6 +79,7 @@ const FAQ = () => {
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>
+              </motion.div>
             ))}
           </Accordion>
         </motion.div>

@@ -18,22 +18,33 @@ const FinalCTA = () => {
           transition={{ duration: 0.5 }}
           className="max-w-2xl mx-auto text-center"
         >
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-8 shadow-glow">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+            whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, type: "spring" }}
+            whileHover={{ 
+              rotate: 5,
+              scale: 1.05,
+              transition: { duration: 0.3 }
+            }}
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-8 shadow-glow"
+          >
             <Compass className="w-8 h-8 text-primary-foreground" />
-          </div>
+          </motion.div>
           
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 text-balance">
-            Ready to trade chaos for clarity?
+            Start working with your brain, not against it.
           </h2>
           
           <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
-            Join the founding crew and be first to experience a better way to work with AI—one that protects your focus and helps you finish what matters.
+            Your work tools were designed for interruptions, not deep focus. Overwhelm Navigator is different—a guided system + AI copilot that cuts through the noise so you can finally do your best work without burning out.
           </p>
           
           <div className="max-w-md mx-auto">
             <EmailCapture />
             <p className="mt-4 text-sm text-muted-foreground">
-              No spam. Unsubscribe anytime. We respect your attention.
+              Join 200+ knowledge workers waiting for early access. No spam. Unsubscribe anytime. We respect your attention.
             </p>
           </div>
         </motion.div>

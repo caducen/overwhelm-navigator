@@ -1,73 +1,132 @@
-# Welcome to your Lovable project
+# Overwhelm Navigator
 
-## Project info
+A landing page for **Overwhelm Navigator** — a guided system + AI copilot that cuts through cognitive overload so you can do your best work without burning out.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## Project Overview
 
-## How can I edit this code?
+This is a modern, responsive landing page built with React, TypeScript, and Vite. It includes a waitlist signup system powered by Supabase and email confirmations via Resend.
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- **Frontend**: React 18 + TypeScript + Vite
+- **UI Components**: shadcn/ui + Tailwind CSS
+- **Backend**: Supabase (Database + Edge Functions)
+- **Email**: Resend API
+- **Routing**: React Router
+- **Animations**: Framer Motion
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Getting Started
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
 
-**Use your preferred IDE**
+- Node.js 18+ and npm (or use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+- A Supabase account and project
+- A Resend API key (for email confirmations)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Installation
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. Clone the repository:
+   ```sh
+   git clone <YOUR_GIT_URL>
+   cd overwhelm-navigator
+   ```
 
-Follow these steps:
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+3. Create a `.env` file in the root directory:
+   ```env
+   VITE_SUPABASE_URL=your_supabase_project_url
+   VITE_SUPABASE_PUBLISHABLE_KEY=your_supabase_anon_key
+   ```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+4. Set up Supabase Edge Function secrets:
+   - Go to your Supabase Dashboard → Edge Functions → `send-waitlist-confirmation`
+   - Add secret: `RESEND_API_KEY=your_resend_api_key`
 
-# Step 3: Install the necessary dependencies.
-npm i
+5. Start the development server:
+   ```sh
+   npm run dev
+   ```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+The app will be available at `http://localhost:8080`
+
+## Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run build:dev` - Build for development
+- `npm run lint` - Run ESLint
+- `npm run preview` - Preview production build
+
+## Project Structure
+
+```
+├── src/
+│   ├── components/
+│   │   ├── landing/        # Landing page components
+│   │   └── ui/             # shadcn/ui components
+│   ├── pages/              # Page components
+│   ├── integrations/
+│   │   └── supabase/       # Supabase client and types
+│   └── lib/                # Utilities
+├── supabase/
+│   ├── functions/          # Edge Functions
+│   └── migrations/         # Database migrations
+└── public/                 # Static assets
 ```
 
-**Edit a file directly in GitHub**
+## Features
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- ✅ Responsive landing page with 11 sections
+- ✅ Email waitlist signup with validation
+- ✅ Email confirmation via Resend
+- ✅ Database storage in Supabase
+- ✅ Row Level Security (RLS) enabled
+- ✅ SEO optimized with meta tags
+- ✅ Smooth animations with Framer Motion
 
-**Use GitHub Codespaces**
+## Deployment
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Environment Variables
 
-## What technologies are used for this project?
+Make sure to set these environment variables in your hosting platform:
 
-This project is built with:
+- `VITE_SUPABASE_URL`
+- `VITE_SUPABASE_PUBLISHABLE_KEY`
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+And in Supabase Edge Function secrets:
 
-## How can I deploy this project?
+- `RESEND_API_KEY`
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+### Recommended Hosting Platforms
 
-## Can I connect a custom domain to my Lovable project?
+- **Vercel** - Excellent for React/Vite projects
+- **Netlify** - Great CI/CD integration
+- **Cloudflare Pages** - Fast global CDN
 
-Yes, you can!
+### Build and Deploy
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```sh
+npm run build
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+The `dist` folder contains the production build ready to deploy.
+
+## Custom Domain
+
+You can connect a custom domain through your hosting provider. Common steps:
+
+1. Add your domain in hosting platform settings
+2. Update DNS records as instructed
+3. Update CORS origins in Supabase Edge Function to include your domain
+
+## License
+
+Private project - All rights reserved.
+
+## Support
+
+For issues or questions, please contact the development team.

@@ -17,7 +17,14 @@ const Footer = () => {
           </p>
           
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Overwhelm Navigator. All rights reserved.
+            © 2026 Overwhelm Navigator. All rights reserved.
+          </p>
+        </div>
+        
+        {/* Technical Credibility Signal */}
+        <div className="mt-8 pt-6 border-t border-border/50">
+          <p className="text-xs text-muted-foreground/70 text-center">
+            Built with TypeScript, React, and modern AI frameworks
           </p>
         </div>
       </div>

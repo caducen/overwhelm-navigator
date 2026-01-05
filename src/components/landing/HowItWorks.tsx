@@ -5,20 +5,20 @@ const steps = [
   {
     number: "01",
     icon: MapPin,
-    title: "Map your missions",
-    description: "Capture everything on your plate—projects, commitments, open loops—into one clear command center. No more mental juggling.",
+    title: "Centralize your commitments",
+    description: "Capture everything on your plate—projects, open loops, half-finished ideas—into one clear command center. No more mental juggling across tabs and tools.",
   },
   {
     number: "02",
     icon: Crosshair,
-    title: "Design focused sorties",
-    description: "Work with your AI copilot to break vague intentions into actionable missions. Each sortie is designed for deep focus, not endless context-switching.",
+    title: "Design focus blocks",
+    description: "Work with AI to break vague intentions (\"finish the proposal\") into specific, time-boxed sessions designed for deep work, not context-switching. Each block has a clear outcome.",
   },
   {
     number: "03",
     icon: BarChart3,
-    title: "Review and adapt",
-    description: "Regular briefings help you course-correct, celebrate wins, and ensure you're always flying toward what truly matters.",
+    title: "Reflect and course-correct",
+    description: "Regular check-ins help you celebrate progress, identify patterns, and stay aligned with what truly matters—not just what feels urgent in the moment.",
   },
 ];
 
@@ -63,9 +63,16 @@ const HowItWorks = () => {
                 >
                   {/* Content */}
                   <div className={`flex-1 ${index % 2 === 1 ? "md:text-right" : ""}`}>
-                    <div className={`p-8 rounded-2xl bg-background border border-border shadow-card ${
-                      index % 2 === 1 ? "md:ml-auto" : ""
-                    }`}>
+                    <motion.div
+                      whileHover={{ 
+                        scale: 1.02,
+                        y: -4,
+                        transition: { duration: 0.2 }
+                      }}
+                      className={`p-8 rounded-2xl bg-background border border-border shadow-card transition-all duration-300 hover:shadow-elevated ${
+                        index % 2 === 1 ? "md:ml-auto" : ""
+                      }`}
+                    >
                       <span className="text-5xl font-bold text-primary/20 mb-4 block">
                         {step.number}
                       </span>
@@ -75,7 +82,7 @@ const HowItWorks = () => {
                       <p className="text-muted-foreground leading-relaxed">
                         {step.description}
                       </p>
-                    </div>
+                    </motion.div>
                   </div>
                   
                   {/* Center icon */}
@@ -104,7 +111,7 @@ const HowItWorks = () => {
           <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-signal-green/10 border border-signal-green/30">
             <ArrowRight className="w-5 h-5 text-signal-green" />
             <span className="font-medium text-foreground">
-              Result: Sustainable high performance without burnout
+              → Result: Sustainable high performance without burnout
             </span>
           </div>
         </motion.div>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowRight, Check, Loader2, RefreshCw } from "lucide-react";
@@ -146,13 +147,18 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
         className="flex-1 h-12 text-base"
         disabled={status === "loading"}
       />
-      <Button
-        type="submit"
-        variant="hero"
-        size="lg"
-        disabled={status === "loading"}
-        className="h-12 px-6"
+      <motion.div
+        whileHover={{ scale: status === "loading" ? 1 : 1.02 }}
+        whileTap={{ scale: status === "loading" ? 1 : 0.98 }}
+        transition={{ duration: 0.2 }}
       >
+        <Button
+          type="submit"
+          variant="hero"
+          size="lg"
+          disabled={status === "loading"}
+          className="h-12 px-6 shadow-cta hover:shadow-lg transition-all duration-300"
+        >
         {status === "loading" ? (
           <Loader2 className="w-5 h-5 animate-spin" />
         ) : (
@@ -161,7 +167,8 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
             <ArrowRight className="w-5 h-5" />
           </>
         )}
-      </Button>
+        </Button>
+      </motion.div>
     </form>
   );
 };

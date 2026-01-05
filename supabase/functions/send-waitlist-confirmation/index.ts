@@ -24,9 +24,9 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending waitlist confirmation to: ${email}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Overloaded <hello@osccad.com>",
+      from: "Overwhelm Navigator <hello@osccad.com>",
       to: [email],
-      subject: "You're on the Overloaded waitlist! 🎉",
+      subject: "You're on the Overwhelm Navigator waitlist! 🎉",
       html: `
         <!DOCTYPE html>
         <html>
@@ -41,18 +41,18 @@ const handler = async (req: Request): Promise<Response> => {
             </div>
             <div style="padding: 40px 30px;">
               <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
-                Thanks for joining the Overloaded waitlist! We're building the ultimate tool to help overwhelmed freelancers reclaim their time and grow their business.
+                Thanks for joining the Overwhelm Navigator waitlist! We're building a guided system + AI copilot that cuts through cognitive overload so you can do your best work—without burning out.
               </p>
               <p style="color: #374151; font-size: 16px; line-height: 1.6; margin: 0 0 20px 0;">
                 We'll notify you as soon as early access opens. In the meantime, keep an eye on your inbox for updates and exclusive insights.
               </p>
               <p style="color: #6B7280; font-size: 14px; line-height: 1.6; margin: 30px 0 0 0;">
-                – The Overloaded Team
+                – The Overwhelm Navigator Team
               </p>
             </div>
             <div style="background-color: #F9FAFB; padding: 20px 30px; text-align: center; border-top: 1px solid #E5E7EB;">
               <p style="color: #9CA3AF; font-size: 12px; margin: 0;">
-                You received this email because you signed up for the Overloaded waitlist.
+                You received this email because you signed up for the Overwhelm Navigator waitlist.
               </p>
             </div>
           </div>

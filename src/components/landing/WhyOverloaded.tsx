@@ -52,7 +52,12 @@ const WhyOverloaded = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="flex gap-5 p-6 rounded-xl bg-background border border-border shadow-card"
+                whileHover={{ 
+                  scale: 1.02,
+                  x: 4,
+                  transition: { duration: 0.2 }
+                }}
+                className="flex gap-5 p-6 rounded-xl bg-background border border-border shadow-card transition-all duration-300 hover:shadow-elevated"
               >
                 <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                   <cause.icon className="w-6 h-6 text-primary" />
@@ -77,8 +82,7 @@ const WhyOverloaded = () => {
             className="mt-12 p-6 rounded-xl bg-primary/5 border border-primary/20 text-center"
           >
             <p className="text-foreground font-medium">
-              Research shows context-switching can cost you up to <span className="text-primary font-bold">40% of your productive time</span>. 
-              Your brain isn't broken—it's being sabotaged by design.
+              Research shows context-switching can cost you up to 40% of your productive time. Your brain isn't broken—it's being sabotaged by design.
             </p>
           </motion.div>
         </motion.div>
