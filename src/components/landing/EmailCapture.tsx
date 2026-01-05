@@ -9,6 +9,9 @@ import { z } from "zod";
 
 const emailSchema = z.string().trim().email().max(255);
 
+// Security: Valid source values to prevent manipulation
+const VALID_SOURCES = ["hero", "pricing", "final-cta"];
+
 interface EmailCaptureProps {
   source?: string;
 }
@@ -18,7 +21,11 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [resending, setResending] = useState(false);
   const [successEmail, setSuccessEmail] = useState("");
+  const [lastResendTime, setLastResendTime] = useState<number>(0);
   const { toast } = useToast();
+
+  // Rate limiting: 1 minute cooldown between resends
+  const RESEND_COOLDOWN = 60 * 1000; // 1 minute
 
   const sendConfirmationEmail = async (emailAddress: string): Promise<boolean> => {
     try {
@@ -27,12 +34,18 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
       });
       
       if (error) {
-        console.error("Failed to send confirmation email:", error);
+        // Only log in development
+        if (import.meta.env.DEV) {
+          console.error("Failed to send confirmation email:", error);
+        }
         return false;
       }
       return true;
     } catch (err) {
-      console.error("Failed to send confirmation email:", err);
+      // Only log in development
+      if (import.meta.env.DEV) {
+        console.error("Failed to send confirmation email:", err);
+      }
       return false;
     }
   };
@@ -52,9 +65,12 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
     setStatus("loading");
     const validEmail = result.data;
     
+    // Security: Validate and sanitize source parameter
+    const sanitizedSource = VALID_SOURCES.includes(source || "") ? source : "hero";
+    
     const { error } = await supabase
       .from("waitlist_signups")
-      .insert({ email: validEmail, source });
+      .insert({ email: validEmail, source: sanitizedSource });
 
     if (error) {
       if (error.code === "23505") {
@@ -97,8 +113,23 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
   const handleResend = async () => {
     if (!successEmail || resending) return;
     
+    // Rate limiting: Check cooldown
+    const now = Date.now();
+    const timeSinceLastResend = now - lastResendTime;
+    
+    if (timeSinceLastResend < RESEND_COOLDOWN) {
+      const remainingSeconds = Math.ceil((RESEND_COOLDOWN - timeSinceLastResend) / 1000);
+      toast({
+        title: "Please wait",
+        description: `You can resend in ${remainingSeconds} second${remainingSeconds !== 1 ? 's' : ''}.`,
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setResending(true);
     const emailSent = await sendConfirmationEmail(successEmail);
+    setLastResendTime(Date.now());
     setResending(false);
     
     toast({

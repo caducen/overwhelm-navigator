@@ -3,29 +3,111 @@ import { Resend } from "https://esm.sh/resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+// Security: Restrict CORS to allowed origins only
+const ALLOWED_ORIGINS = [
+  "https://osccad.com",
+  "https://www.osccad.com",
+  "https://overwhelmnavigator.com",
+  "https://www.overwhelmnavigator.com",
+  "http://localhost:8080",
+  "http://localhost:5173",
+];
+
+// Email validation
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAX_EMAIL_LENGTH = 255;
+
+// Rate limiting (in-memory, resets on function restart)
+const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
+const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const MAX_REQUESTS_PER_WINDOW = 3;
+
+const getCorsHeaders = (origin: string | null) => {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
 };
 
 interface WaitlistEmailRequest {
   email: string;
 }
 
+const validateEmail = (email: string): boolean => {
+  if (!email || typeof email !== "string") return false;
+  if (email.length > MAX_EMAIL_LENGTH) return false;
+  return EMAIL_REGEX.test(email.trim());
+};
+
+const checkRateLimit = (identifier: string): boolean => {
+  const now = Date.now();
+  const record = rateLimitMap.get(identifier);
+
+  if (!record || now > record.resetTime) {
+    rateLimitMap.set(identifier, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+    return true;
+  }
+
+  if (record.count >= MAX_REQUESTS_PER_WINDOW) {
+    return false;
+  }
+
+  record.count++;
+  return true;
+};
+
 const handler = async (req: Request): Promise<Response> => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
+  // Only allow POST
+  if (req.method !== "POST") {
+    return new Response(
+      JSON.stringify({ error: "Method not allowed" }),
+      { status: 405, headers: { "Content-Type": "application/json", ...corsHeaders } }
+    );
+  }
+
+  // Validate API key
+  if (!Deno.env.get("RESEND_API_KEY")) {
+    console.error("RESEND_API_KEY is not configured");
+    return new Response(
+      JSON.stringify({ error: "Server configuration error" }),
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+    );
+  }
+
   try {
     const { email }: WaitlistEmailRequest = await req.json();
 
-    console.log(`Sending waitlist confirmation to: ${email}`);
+    // Validate email input
+    if (!validateEmail(email)) {
+      return new Response(
+        JSON.stringify({ error: "Invalid email address" }),
+        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
+
+    // Rate limiting (using email as identifier)
+    const emailLower = email.toLowerCase().trim();
+    if (!checkRateLimit(emailLower)) {
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
     const emailResponse = await resend.emails.send({
       from: "Overwhelm Navigator <hello@osccad.com>",
-      to: [email],
+      to: [emailLower],
       subject: "You're on the Overwhelm Navigator waitlist! 🎉",
       html: `
         <!DOCTYPE html>
@@ -61,20 +143,25 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Email sent successfully:", emailResponse);
+    // Don't log email addresses or full response in production
+    if (emailResponse.error) {
+      console.error("Failed to send email (error details hidden for security)");
+      return new Response(
+        JSON.stringify({ error: "Failed to send email. Please try again later." }),
+        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
+      );
+    }
 
-    return new Response(JSON.stringify(emailResponse), {
-      status: 200,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
-  } catch (error: any) {
-    console.error("Error sending waitlist confirmation:", error);
     return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      JSON.stringify({ success: true, message: "Email sent successfully" }),
+      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
+    );
+  } catch (error: any) {
+    // Don't expose error details to prevent information leakage
+    console.error("Error in send-waitlist-confirmation function");
+    return new Response(
+      JSON.stringify({ error: "An error occurred. Please try again later." }),
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
     );
   }
 };
