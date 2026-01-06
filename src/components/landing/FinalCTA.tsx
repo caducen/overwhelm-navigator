@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { Compass } from "lucide-react";
 import EmailCapture from "./EmailCapture";
 
 const FinalCTA = () => {
@@ -28,9 +27,16 @@ const FinalCTA = () => {
               scale: 1.05,
               transition: { duration: 0.3 }
             }}
-            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-8 shadow-glow"
+            className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-primary mb-8 shadow-glow overflow-hidden"
           >
-            <Compass className="w-8 h-8 text-primary-foreground" />
+            <img 
+              src="/favicon.png" 
+              alt="Overwhelm Navigator" 
+              className="w-10 h-10 object-contain"
+              style={{
+                filter: 'brightness(0) invert(1)'
+              }}
+            />
           </motion.div>
           
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 text-balance">

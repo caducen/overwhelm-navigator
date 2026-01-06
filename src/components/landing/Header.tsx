@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Compass, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import {
   Sheet,
   SheetContent,
@@ -33,8 +33,15 @@ const Header = () => {
     >
       <div className="container flex items-center justify-between h-16">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <Compass className="w-5 h-5 text-primary-foreground" />
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center overflow-hidden">
+            <img 
+              src="/favicon.png" 
+              alt="Overwhelm Navigator" 
+              className="w-full h-full object-contain brightness-0 invert"
+              style={{
+                filter: 'brightness(0) invert(1)'
+              }}
+            />
           </div>
           <span className="font-semibold text-lg text-foreground">Overwhelm Navigator</span>
         </div>
