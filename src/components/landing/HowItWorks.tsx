@@ -39,7 +39,7 @@ const HowItWorks = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             How it works
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto font-medium">
             A simple three-step flow that transforms chaos into clarity.
           </p>
         </motion.div>

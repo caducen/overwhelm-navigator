@@ -55,7 +55,7 @@ const IsThisYou = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Sound familiar?
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto font-medium">
             These aren't personal failures—they're symptoms of systems designed for interruption, not clarity.
           </p>
         </motion.div>
@@ -78,10 +78,10 @@ const IsThisYou = () => {
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
                 <symptom.icon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-semibold text-foreground mb-2">
+              <h3 className="font-semibold text-base lg:text-lg text-foreground mb-2">
                 {symptom.title}
               </h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm lg:text-base text-muted-foreground leading-relaxed">
                 {symptom.description}
               </p>
             </motion.div>
@@ -93,7 +93,7 @@ const IsThisYou = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="text-center mt-12 text-lg text-muted-foreground"
+          className="text-center mt-12 text-base lg:text-lg text-muted-foreground"
         >
           If you checked more than two, you're not alone—and there's a better way.
         </motion.p>

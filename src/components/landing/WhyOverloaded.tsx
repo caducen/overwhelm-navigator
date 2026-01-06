@@ -38,7 +38,7 @@ const WhyOverloaded = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Why your brain feels overloaded
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto font-medium">
               Cognitive overload happens when your working memory is constantly full. 
               The issue isn't you—it's the systems you're forced to work within.
             </p>
@@ -63,10 +63,10 @@ const WhyOverloaded = () => {
                   <cause.icon className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-foreground text-lg mb-2">
+                  <h3 className="font-semibold text-foreground text-xl mb-3">
                     {cause.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-base text-muted-foreground leading-relaxed">
                     {cause.description}
                   </p>
                 </div>
@@ -81,7 +81,7 @@ const WhyOverloaded = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="mt-12 p-6 rounded-xl bg-primary/5 border border-primary/20 text-center"
           >
-            <p className="text-foreground font-medium">
+            <p className="text-base lg:text-lg text-foreground font-medium leading-relaxed">
               Research shows context-switching can cost you up to 40% of your productive time. Your brain isn't broken—it's being sabotaged by design.
             </p>
           </motion.div>

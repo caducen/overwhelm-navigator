@@ -47,7 +47,7 @@ const FAQ = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Frequently asked questions
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-xl lg:text-2xl text-muted-foreground font-medium">
             Everything you need to know about Overwhelm Navigator.
           </p>
         </motion.div>

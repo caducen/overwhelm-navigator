@@ -49,7 +49,7 @@ const StatCard = ({ stat, index }: { stat: typeof statistics[0]; index: number }
         {count}
         {stat.suffix && <span>{stat.suffix}</span>}
       </div>
-      <p className="text-foreground mb-4 leading-relaxed">
+      <p className="text-base sm:text-lg text-foreground mb-4 leading-relaxed">
         {stat.description}
       </p>
       <p className="text-xs text-muted-foreground">
@@ -73,7 +73,7 @@ const SocialProof = () => {
           <p className="text-sm font-medium text-primary uppercase tracking-wider mb-2">
             THE RESEARCH IS CLEAR
           </p>
-          <h2 className="text-2xl sm:text-3xl font-bold text-foreground">
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground">
             Why knowledge workers are struggling
           </h2>
         </motion.div>

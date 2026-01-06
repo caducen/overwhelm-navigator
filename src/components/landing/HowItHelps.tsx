@@ -42,7 +42,7 @@ const HowItHelps = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             How Overwhelm Navigator helps
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl lg:text-2xl text-muted-foreground max-w-2xl mx-auto font-medium">
             We address the three core deficits that modern work creates—giving you back what you've lost to fragmented systems.
           </p>
         </motion.div>

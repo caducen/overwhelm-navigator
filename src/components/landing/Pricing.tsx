@@ -27,7 +27,7 @@ const Pricing = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Founding Crew Program
           </h2>
-          <p className="text-lg text-muted-foreground mb-12">
+          <p className="text-xl lg:text-2xl text-muted-foreground mb-12 font-medium">
             Join a small cohort of early adopters who will help shape the future of calm, focused productivity.
           </p>
           

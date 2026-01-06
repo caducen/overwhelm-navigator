@@ -37,7 +37,7 @@ const FinalCTA = () => {
             Start working with your brain, not against it.
           </h2>
           
-          <p className="text-lg text-muted-foreground mb-10 max-w-xl mx-auto">
+          <p className="text-xl lg:text-2xl text-muted-foreground mb-10 max-w-xl mx-auto font-medium leading-relaxed">
             Your work tools were designed for interruptions, not deep focus. Overwhelm Navigator is different—a guided system + AI copilot that cuts through the noise so you can finally do your best work without burning out.
           </p>
           
