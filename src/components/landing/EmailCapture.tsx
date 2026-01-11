@@ -89,9 +89,28 @@ const EmailCapture = ({ source = "hero" }: EmailCaptureProps) => {
       }
       
       setStatus("idle");
+      
+      // Log error details for debugging (helps identify 401, 403, etc.)
+      console.error("Waitlist signup error:", {
+        message: error.message,
+        code: error.code,
+        details: error.details,
+        hint: error.hint,
+      });
+      
+      // Provide more specific error messages based on error code
+      let errorMessage = "Please try again later.";
+      if (error.code === "PGRST301" || error.message?.includes("401") || error.message?.includes("Unauthorized")) {
+        errorMessage = "Authentication error. Please check server configuration.";
+      } else if (error.code === "PGRST301" || error.message?.includes("403") || error.message?.includes("Forbidden")) {
+        errorMessage = "Access denied. Please check database permissions.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Something went wrong",
-        description: "Please try again later.",
+        description: errorMessage,
         variant: "destructive",
       });
       return;
